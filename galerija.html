@@ -1,184 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="sr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
+<title>Galerija — JoAI</title>
+<meta name="description" content="Izbor sajtova, objava i vizuelnih priča. Ceo portfolio JoAI radova.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #1a1310; --bg-2: #211812; --surface: #251b15; --surface-2: #2f231b;
+    --border: #3a2c22; --fg: #f3ebdf; --muted: #b6a693; --accent: #e3a44b; --on-accent: #201509;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Hanken Grotesk', sans-serif; -webkit-font-smoothing: antialiased; background: #1a1310; }
+  body { font-family: 'Hanken Grotesk', sans-serif; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--fg); min-height: 100vh; }
+  img { max-width: 100%; }
   a { color: inherit; text-decoration: none; }
-  a.link:hover { color: #e3a44b; }
-  ::selection { background: #e3a44b; color: #201509; }
+  a.link:hover { color: var(--accent); }
+  ::selection { background: var(--accent); color: #201509; }
+  .g-card { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); cursor: zoom-in; transition: border-color .2s, transform .2s; }
+  .g-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
   @media (min-width: 900px) {
-    [data-gallery] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; align-items: stretch !important; }
+    #gallery { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; align-items: stretch !important; }
     [data-video-card] { grid-row: span 2; }
     [data-banner] { grid-column: 2 / 4; align-self: stretch; }
-    [data-video-card] [data-thumb], .noop { }
-    [data-gallery] > div > [data-thumb] { flex: 1 1 auto; aspect-ratio: auto !important; min-height: 240px; }
+    [data-video-card] [data-thumb] { flex: 1 1 auto; aspect-ratio: auto !important; min-height: 240px; }
   }
   @media (max-width: 640px) {
     nav > div, header, section, footer > div { padding-left: 20px !important; padding-right: 20px !important; }
     header { padding-top: 96px !important; padding-bottom: 48px !important; }
-    section[style*="padding: 0 32px 96px"] { padding-bottom: 48px !important; }
+    section.gallery-sec { padding-bottom: 48px !important; }
     header h1 { font-size: 38px !important; }
-    nav a[href="index.html"][style*="font-size: 26px"] { font-size: 22px !important; }
+    nav a.brand { font-size: 22px !important; }
     footer > div { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
   }
 </style>
-</helmet>
-<div style="background: #1a1310; color: #f3ebdf; min-height: 100vh;">
+</head>
+<body>
 
   <!-- NAV -->
-  <nav style="position: sticky; top: 0; z-index: 50; background: color-mix(in oklab, #1a1310 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid #3a2c22;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 72px;">
-      <a href="index.html" style="display: flex; align-items: center; gap: 12px; font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: .3px;">
-        <img src="uploads/vision2_20260901_201152_1.jpg" alt="JoAI logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 18px -4px #e3a44b;">
+  <nav style="position: sticky; top: 0; z-index: 50; background: color-mix(in oklab, var(--bg) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+    <div style="max-width: 100%; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 72px;">
+      <a href="index.html" class="brand" style="display: flex; align-items: center; gap: 12px; font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: .3px;">
+        <img src="uploads/vision2_20260901_201152_1.jpg" alt="JoAI logo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 18px -4px var(--accent);">
         JoAI
       </a>
-      <a class="link" href="index.html" style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; border: 1px solid #3a2c22; padding: 10px 20px; border-radius: 999px;">← Nazad na sajt</a>
+      <a class="link" href="index.html" style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; border: 1px solid var(--border); padding: 10px 20px; border-radius: 999px;">← Nazad na sajt</a>
     </div>
   </nav>
 
   <!-- HEADER -->
-  <header style="max-width: 1200px; margin: 0 auto; padding: 88px 32px 56px;">
-    <div style="font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #e3a44b; margin-bottom: 16px;">Galerija</div>
+  <header style="max-width: 100%; margin: 0 auto; padding: 88px 32px 56px;">
+    <div style="font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px;">Galerija</div>
     <h1 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(40px, 6vw, 68px); line-height: 1.04; letter-spacing: -.5px; max-width: 760px;">Svi radovi na jednom mestu.</h1>
-    <p style="font-size: 18px; line-height: 1.6; color: #b6a693; max-width: 460px; margin-top: 22px; text-wrap: pretty;">Izbor sajtova, objava i vizuelnih priča. Klikni na sliku za pun prikaz.</p>
+    <p style="font-size: 18px; line-height: 1.6; color: var(--muted); max-width: 460px; margin-top: 22px; text-wrap: pretty;">Izbor sajtova, objava i vizuelnih priča. Klikni na sliku za pun prikaz.</p>
   </header>
 
   <!-- GALLERY -->
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 32px 96px;">
-    <div data-gallery style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; align-items: start;">
+  <section class="gallery-sec" style="max-width: 100%; margin: 0 auto; padding: 0 32px 96px;">
+    <div id="gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; align-items: start;">
 
       <!-- VIDEO CARD -->
-      <div data-video-card style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid #3a2c22; background: #251b15;">
-        <div style="aspect-ratio: 3 / 4; background: #000; overflow: hidden;">
-          <video controls playsinline preload="auto" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #000;">
+      <div data-video-card style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--surface);">
+        <div data-thumb style="aspect-ratio: 3 / 4; background: #000; overflow: hidden;">
+          <video controls playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: contain; display: block; background: #000;">
             <source src="uploads/insta-story.mp4" type="video/mp4">
           </video>
         </div>
         <div style="padding: 18px 20px; display: flex; flex-direction: column; flex: 1;">
-          <div style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #e3a44b; margin-bottom: 6px;">Video · Instagram story</div>
+          <div style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">Video · Instagram story</div>
           <h3 style="font-size: 19px; font-weight: 600;">Reel u pokretu</h3>
-          <p style="color: #b6a693; font-size: 14px; line-height: 1.55; margin-top: 4px;">Kratka priča napravljena za društvene mreže — ritam, tekst i pokret u jednom kadru.</p>
-          <button onClick="{{ openFs }}" style="margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: #e3a44b; color: #201509; border: none; padding: 10px 18px; border-radius: 999px; font-family: inherit; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 14px;">▶ Pusti preko celog ekrana</button>
+          <p style="color: var(--muted); font-size: 14px; line-height: 1.55; margin-top: 4px;">Kratka priča napravljena za društvene mreže — ritam, tekst i pokret u jednom kadru.</p>
+          <button id="fs-btn" style="display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--on-accent); border: none; padding: 10px 18px; border-radius: 999px; font-family: inherit; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 14px; align-self: flex-start;">▶ Pusti preko celog ekrana</button>
         </div>
       </div>
 
-      <sc-for list="{{ worksTop }}" as="w" hint-placeholder-count="0">
-        <div onClick="{{ w.open }}" style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid #3a2c22; background: #251b15; cursor: zoom-in;">
-          <div data-thumb role="img" aria-label="{{ w.title }}" style="{{ w.imgStyle }}"></div>
-          <div style="padding: 18px 20px; display: flex; flex-direction: column; flex: 1;">
-            <div style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #e3a44b; margin-bottom: 6px;">{{ w.tag }}</div>
-            <h3 style="font-size: 19px; font-weight: 600;">{{ w.title }}</h3>
-            <p style="color: #b6a693; font-size: 14px; line-height: 1.55; margin-top: 4px;">{{ w.body }}</p>
-          </div>
-        </div>
-      </sc-for>
+      <!-- gallery items get inserted around the banner by JS -->
+      <div id="slot-top"></div>
 
       <!-- BANNER -->
       <div data-banner style="display: flex; align-items: center; padding: 28px 26px; border-radius: 18px; background: #d8c2a0; border: 1px solid #c9b088;">
         <p style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 22px; line-height: 1.35; letter-spacing: -.2px; color: #2a1d10; text-wrap: pretty;">Želje i maštu pretvaram u sliku, <span style="color: #9a5a1e; font-style: italic;">a problem u rešenje.</span></p>
       </div>
 
-      <sc-for list="{{ worksRest }}" as="w" hint-placeholder-count="0">
-        <div onClick="{{ w.open }}" style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid #3a2c22; background: #251b15; cursor: zoom-in;">
-          <div role="img" aria-label="{{ w.title }}" style="{{ w.imgStyle }}"></div>
-          <div style="padding: 18px 20px; display: flex; flex-direction: column; flex: 1;">
-            <div style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #e3a44b; margin-bottom: 6px;">{{ w.tag }}</div>
-            <h3 style="font-size: 19px; font-weight: 600;">{{ w.title }}</h3>
-            <p style="color: #b6a693; font-size: 14px; line-height: 1.55; margin-top: 4px;">{{ w.body }}</p>
-          </div>
-        </div>
-      </sc-for>
+      <div id="slot-rest"></div>
 
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer style="border-top: 1px solid #3a2c22; background: #211812;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 40px 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+  <footer style="border-top: 1px solid var(--border); background: var(--bg-2);">
+    <div style="max-width: 100%; margin: 0 auto; padding: 40px 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
       <a href="index.html" style="display: flex; align-items: center; gap: 10px; font-family: 'Instrument Serif', serif; font-size: 22px;">
-        <span style="width: 9px; height: 9px; border-radius: 50%; background: #e3a44b;"></span> JoAI
+        <span style="width: 9px; height: 9px; border-radius: 50%; background: var(--accent);"></span> JoAI
       </a>
-      <a class="link" href="index.html#kontakt" style="font-size: 14px; color: #b6a693;">Kontakt →</a>
-      <div style="font-size: 14px; color: #b6a693;">© 2026 JoAI · Beograd</div>
+      <a class="link" href="index.html#kontakt" style="font-size: 14px; color: var(--muted);">Kontakt →</a>
+      <div style="font-size: 14px; color: var(--muted);">© 2026 JoAI · Beograd</div>
     </div>
   </footer>
 
   <!-- LIGHTBOX -->
-  <div onClick="{{ closeLb }}" style="{{ overlayStyle }}">
-    <div style="{{ imageBoxStyle }}"></div>
+  <div id="lightbox" style="position: fixed; inset: 0; z-index: 100; background: rgba(10,7,5,.93); display: none; align-items: center; justify-content: center; padding: 32px; cursor: zoom-out; backdrop-filter: blur(4px);">
+    <div id="lightbox-img" style="width: min(94vw, 1000px); height: min(90vh, 90vh); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
   </div>
 
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{ &quot;$preview&quot;: { &quot;width&quot;: 1200, &quot;height&quot;: 900 } }">
-class Component extends DCLogic {
-  state = { open: false, activeSrc: null };
+<script>
+  var items = [
+    { img: 'uploads/vision2_20260828_230743_1.jpg', tag: 'Sajt + objave', title: 'Sereno Retreat', body: 'Vizuelni identitet i sajt za wellness brend — mirna estetika koja poziva na predah.' },
+    { img: 'uploads/vision2_20260830_112400_1.jpg', tag: 'Objave i sadržaj', title: 'Ubud Yoga', body: 'Serija smirenih objava za jutarnje časove joge — popunjeni termini već prve nedelje.' },
+    { img: 'uploads/vision2_20260902_130736_2.jpg', tag: 'Objave i sadržaj', title: 'Bašta Kafe', body: 'Serija toplih objava o domaćoj kafi koje su udvostručile angažman na mrežama.' },
+    { img: 'uploads/autoflow_20260827_200100_3.jpg', tag: 'Objave i sadržaj', title: 'Let Life Surprise You', body: 'Atmosferične objave za brend sveća i toplih napitaka — priča koja se pamti.' },
+    { img: 'uploads/vision2_20260827_194859_1.jpg', tag: 'Sajt', title: 'Home Sentiments', body: 'Online prodavnica za ručno pravljene šolje i sveće, sa čistim i toplim dizajnom.' },
+    { img: 'uploads/vision2_20260902_144501_2.jpg', tag: 'Sajt + objave', title: 'Gradski Kiosk', body: 'Sajt i profil za lokalni kiosk — mali biznis sa velikim prisustvom u kraju.' },
+    { img: 'uploads/visionpro_20260902_133358_2-bb0ec63e.jpg', tag: 'Sajt + objave', title: 'AI Studio', body: 'Vizual za brend na spoju kreative i tehnologije — topao radni prostor uz zalazak.' },
+    { img: 'uploads/osmeh-logo.png', tag: 'Vizuelni identitet', title: 'Osmeh', body: 'Vedar logo i identitet za brend koji nasmeje — jednostavno, toplo i prepoznatljivo.', fit: 'contain', bg: '#ffffff' },
+    { img: 'uploads/vision2_20260828_230233_1.jpg', tag: 'Sajt + objave', title: 'Tihi Predah', body: 'Mirna vizuelna priča za wellness brend — spokoj koji se oseti na prvi pogled.' },
+    { img: 'uploads/autoflow_20260827_203731_3.jpg', tag: 'Objave i sadržaj', title: 'Zlatni Detalj', body: 'Luksuzne produkt objave za modni brend — svetlo, tekstura i pažnja na detalj.' },
+    { img: 'uploads/autoflow_20260827_200058_1.jpg', tag: 'Objave i sadržaj', title: 'Jutro u Ubudu', body: 'Topla lifestyle serija za brend napitaka — osmeh, para i jutarnja svetlost.' }
+  ];
 
-  componentDidMount() {
-    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ open: false, activeSrc: null }); };
-    window.addEventListener('keydown', this._onKey);
-  }
-  componentWillUnmount() { window.removeEventListener('keydown', this._onKey); }
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightbox-img');
+  function openLb(src) { lbImg.style.backgroundImage = "url('" + src + "')"; lb.style.display = 'flex'; }
+  function closeLb() { lb.style.display = 'none'; lbImg.style.backgroundImage = 'none'; }
+  lb.addEventListener('click', closeLb);
+  window.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLb(); });
 
-  renderVals() {
-    const open = this.state.open;
-    const items = [
-      { img: 'uploads/vision2_20260828_230743_1.jpg', ar: '3 / 4', tag: 'Sajt + objave', title: 'Sereno Retreat', body: 'Vizuelni identitet i sajt za wellness brend — mirna estetika koja poziva na predah.' },
-      { img: 'uploads/vision2_20260830_112400_1.jpg', ar: '16 / 9', tag: 'Objave i sadržaj', title: 'Ubud Yoga', body: 'Serija smirenih objava za jutarnje časove joge — popunjeni termini već prve nedelje.' },
-      { img: 'uploads/vision2_20260902_130736_2.jpg', ar: '16 / 9', tag: 'Objave i sadržaj', title: 'Bašta Kafe', body: 'Serija toplih objava o domaćoj kafi koje su udvostručile angažman na mrežama.' },
-      { img: 'uploads/autoflow_20260827_200100_3.jpg', ar: '3 / 4', tag: 'Objave i sadržaj', title: 'Let Life Surprise You', body: 'Atmosferične objave za brend sveća i toplih napitaka — priča koja se pamti.' },
-      { img: 'uploads/vision2_20260827_194859_1.jpg', ar: '2 / 3', tag: 'Sajt', title: 'Home Sentiments', body: 'Online prodavnica za ručno pravljene šolje i sveće, sa čistim i toplim dizajnom.' },
-      { img: 'uploads/vision2_20260902_144501_2.jpg', ar: '3 / 4', tag: 'Sajt + objave', title: 'Gradski Kiosk', body: 'Sajt i profil za lokalni kiosk — mali biznis sa velikim prisustvom u kraju.' },
-      { img: 'uploads/visionpro_20260902_133358_2-bb0ec63e.jpg', ar: '16 / 9', tag: 'Sajt + objave', title: 'AI Studio', body: 'Vizual za brend na spoju kreative i tehnologije — topao radni prostor uz zalazak.' },
-      { img: 'uploads/osmeh-logo.png', ar: '1 / 1', tag: 'Vizuelni identitet', title: 'Osmeh', body: 'Vedar logo i identitet za brend koji nasmeje — jednostavno, toplo i prepoznatljivo.', fit: 'contain', bg: '#ffffff' },
-      { img: 'uploads/vision2_20260828_230233_1.jpg', ar: '2 / 3', tag: 'Sajt + objave', title: 'Tihi Predah', body: 'Mirna vizuelna priča za wellness brend — spokoj koji se oseti na prvi pogled.' },
-      { img: 'uploads/autoflow_20260827_203731_3.jpg', ar: '3 / 4', tag: 'Objave i sadržaj', title: 'Zlatni Detalj', body: 'Luksuzne produkt objave za modni brend — svetlo, tekstura i pažnja na detalj.' },
-      { img: 'uploads/autoflow_20260827_200058_1.jpg', ar: '3 / 4', tag: 'Objave i sadržaj', title: 'Jutro u Ubudu', body: 'Topla lifestyle serija za brend napitaka — osmeh, para i jutarnja svetlost.' },
-    ];
-    const works = items.map(w => ({
-      ...w,
-      imgStyle: { aspectRatio: '4 / 3', backgroundImage: `url('${w.img}')`, backgroundSize: w.fit || 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundColor: w.bg || '#2f231b' },
-      open: () => this.setState({ open: true, activeSrc: w.img }),
-    }));
-    return {
-      works,
-      worksTop: works.slice(0, 2),
-      worksRest: works.slice(2),
-      openFs: (e) => {
-        const card = e.currentTarget.closest('[data-video-card]');
-        const v = card && card.querySelector('video');
-        if (!v) return;
-        const go = () => { const fn = v.requestFullscreen || v.webkitRequestFullscreen || v.webkitEnterFullscreen; if (fn) try { fn.call(v); } catch (_) {} };
-        v.muted = false;
-        const p = v.play();
-        if (p && p.then) p.then(go).catch(go); else go();
-      },
-      closeLb: () => this.setState({ open: false, activeSrc: null }),
-      overlayStyle: {
-        position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(10,7,5,.93)',
-        display: open ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center',
-        padding: '32px', cursor: 'zoom-out', backdropFilter: 'blur(4px)',
-      },
-      imageBoxStyle: {
-        width: 'min(94vw, 1000px)', height: 'min(90vh, 90vh)',
-        backgroundImage: this.state.activeSrc ? `url('${this.state.activeSrc}')` : 'none',
-        backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat: 'no-repeat',
-      },
-    };
+  function makeCard(w) {
+    var d = document.createElement('div');
+    d.className = 'g-card';
+    d.innerHTML =
+      '<div data-thumb role="img" aria-label="' + w.title + '" style="aspect-ratio: 4 / 3; background-image: url(\'' + w.img + '\'); background-size: ' + (w.fit || 'cover') + '; background-position: center; background-repeat: no-repeat; background-color: ' + (w.bg || 'var(--surface-2)') + ';"></div>' +
+      '<div style="padding: 18px 20px; display: flex; flex-direction: column; flex: 1;">' +
+        '<div style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">' + w.tag + '</div>' +
+        '<h3 style="font-size: 19px; font-weight: 600;">' + w.title + '</h3>' +
+        '<p style="color: var(--muted); font-size: 14px; line-height: 1.55; margin-top: 4px;">' + w.body + '</p>' +
+      '</div>';
+    d.addEventListener('click', function() { openLb(w.img); });
+    return d;
   }
-}
+
+  var slotTop = document.getElementById('slot-top');
+  var slotRest = document.getElementById('slot-rest');
+  items.slice(0, 2).forEach(function(w) { slotTop.parentNode.insertBefore(makeCard(w), slotTop); });
+  slotTop.remove();
+  items.slice(2).forEach(function(w) { slotRest.parentNode.insertBefore(makeCard(w), slotRest); });
+  slotRest.remove();
+
+  // Fullscreen video
+  document.getElementById('fs-btn').addEventListener('click', function(e) {
+    var card = e.currentTarget.closest('[data-video-card]');
+    var v = card && card.querySelector('video');
+    if (!v) return;
+    var go = function() { var fn = v.requestFullscreen || v.webkitRequestFullscreen || v.webkitEnterFullscreen; if (fn) { try { fn.call(v); } catch (_) {} } };
+    v.muted = false;
+    var p = v.play();
+    if (p && p.then) p.then(go).catch(go); else go();
+  });
 </script>
 </body>
 </html>
